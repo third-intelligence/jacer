@@ -1,0 +1,44 @@
+[project]
+name = "jacer"
+version = "1.2.0"
+description = "Japanese ASR scoring: CER_strict, CER_flex and CER_kana, robust to notation and spelling variants"
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+authors = [{ name = "Tatsunari Matsushima", email = "tatsunari.matsushima@third-intelligence.com" }]
+requires-python = ">=3.10"
+keywords = ["asr", "speech-recognition", "japanese", "cer", "evaluation", "metrics"]
+classifiers = [
+    "Natural Language :: Japanese",
+    "Programming Language :: Python :: 3",
+    "Topic :: Multimedia :: Sound/Audio :: Speech",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "jiwer>=3.0",
+    # Everything that ships a dictionary or a normalization table is part of
+    # the metric definition -- a different build tags, reads or normalizes
+    # differently and changes the scores -- so it is pinned exactly.
+    # `jacer.scoring_environment()` reports what is installed.
+    "neologdn==0.5.6",
+    "pyopenjtalk-plus==0.4.1.post8",
+    "fugashi==1.5.2",
+    "unidic-lite==1.0.8",
+    # pyopenjtalk-plus corrects readings with Sudachi by default
+    "sudachipy==0.6.11",
+    "sudachidict-core==20260428",
+]
+
+[project.urls]
+Repository = "https://github.com/third-intelligence/jacer"
+Documentation = "https://github.com/third-intelligence/jacer/blob/main/docs/metrics.md"
+
+[dependency-groups]
+dev = ["pytest>=8"]
+
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/jacer"]
